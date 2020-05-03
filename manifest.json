@@ -1,0 +1,35 @@
+{
+  "author": "Alan Thiessen",
+  "content_scripts": [
+    {
+      "css": [
+        "css/doorLockManager.css"
+      ],
+      "js": [
+        "js/DoorlockManagerExtension.js"
+      ]
+    }
+  ],
+  "description": "A Mozilla IoT Gateway extension to manage door locks, users, and pin codes.",
+  "gateway_specific_settings": {
+    "webthings": {
+      "exec": "{nodeLoader} {path}",
+      "primary_type": "extension",
+      "strict_max_version": "*",
+      "strict_min_version": "0.10.0"
+    }
+  },
+  "homepage_url": "https://github.com/AlanDThiessen/doorlock-manager",
+  "id": "doorlock-manager",
+  "license": "MIT",
+  "manifest_version": 1,
+  "name": "Doorlock Manager",
+  "short_name": "DoorlockMgr",
+  "version": "0.1.0",
+  "web_accessible_resources": [
+    "css/*.css",
+    "images/*.svg",
+    "js/*.js",
+    "views/*.html"
+  ]
+}

@@ -1,0 +1,45 @@
+#main-menu #extension-doorlock-manager-menu-item {
+    background-image: url('../images/menu-icon.svg');
+}
+
+
+#extension-doorlock-manager-view .title-bar {
+    text-align: center;
+    line-height: 9.6rem;
+    height: 9.6rem;
+}
+
+
+#extension-doorlock-manager-view .doorlock-manager-header {
+    margin: 0 auto;
+    display: inline-block;
+    padding: 0;
+    padding-left: 6.8rem;
+    font-size: 1.8rem;
+    background-size: 3.2rem;
+    background-repeat: no-repeat;
+    background-position: 2rem;
+    background-image: url('../images/menu-icon.svg');
+}
+
+
+#extension-doorlock-manager-view {
+    height: calc(100% - 7.6rem);
+    box-sizing: border-box;
+    overflow: auto;
+    position: relative;
+    top: 7.6rem;
+    color: white;
+}
+
+#extension-doorlock-manager-main {
+    position: relative;
+    top: calc(50% - 7.6rem);;
+    transform: translateY(-50%);
+    max-height: 100%;
+    text-align: left;
+    font-size: 1.6rem;
+    color: #fff;
+    max-width: 60rem;
+    margin: 0 auto;
+}
