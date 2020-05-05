@@ -44,3 +44,8 @@
     max-width: 60rem;
     margin: 0 auto;
 }
+
+
+#extension-doorlock-manager-userList {
+    text-align: left;
+}

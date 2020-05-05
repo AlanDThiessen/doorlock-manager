@@ -46,6 +46,41 @@
         SelectDoorLock(event) {
             const doorLockId = this.GetId('select').value;
             const mgr = this;
+            const userList = this.GetId('userList');
+
+            let lock = this.doorLocks.find((lock) => lock.id == doorLockId);
+
+            window.API.getJson(lock.properties.users.links[0].href)
+                .then((resp) => {
+                    let htmlList = '<ul>';
+
+                    resp.users.forEach((user) => {
+                        let startDate = new Date();
+                        let endDate = new Date();
+
+                        startDate.setTime(user.startDate);
+                        endDate.setTime(user.endDate);
+
+                        htmlList += `<li>${user.userName}<ul>`;
+                        htmlList += `<li>Id: ${user.userId}</li>`;
+                        htmlList += `<li>Pin: ${user.pin}</li>`
+                        htmlList += `<li>Start: ${startDate.toLocaleString()}`
+                        htmlList += `<li>End: ${endDate.toLocaleString()}`
+                        htmlList += '</ul>';
+                    });
+
+                    htmlList += '</ul>';
+
+                    userList.innerHTML = htmlList;
+                }).catch((e) => {
+                    console.log(e);
+                })
+        }
+
+
+        NewUserForm() {
+            const doorLockId = this.GetId('select').value;
+            const mgr = this;
 
             let lock = this.doorLocks.find((lock) => lock.id == doorLockId);
             let data = this.GetId('addUser');
