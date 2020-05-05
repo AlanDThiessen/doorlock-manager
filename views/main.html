@@ -1,6 +1,37 @@
 <div class="title-bar">
-    <h3 class="doorlock-manager-header">Doorlock Manager</h3>
+    <h3 class="doorlock-manager-header">Door Lock Manager</h3>
 </div>
 
 <div id="extension-doorlock-manager-main">
+
+    <div>
+        <label>Select Door Lock:</label><br>
+        <select id="extension-doorlock-manager-select">
+        </select>
+    </div>
+
+    <div id="extension-doorlock-manager-addUser" style="display: none">
+        <form>
+            <label for="name">Name</label><br>
+            <input name="name" id="extension-doorlock-manager-name"><br>
+
+            <label for="id">Id</label><br>
+            <input name="id" id="extension-doorlock-manager-id"><br>
+
+            <label for="pin">Pin</label><br>
+            <input name="pin" id="extension-doorlock-manager-pin"><br>
+
+            <label for="startTime">Start</label><br>
+            <input name="startTime" id="extension-doorlock-manager-startTime"><br>
+
+            <label for="endTime">End</label><br>
+            <input name="endTime" id="extension-doorlock-manager-endTime"><br>
+
+            <button id="extension-doorlock-manager-submitUser">Add User</button>
+        </form>
+    </div>
+
+    <div id="extension-doorlock-manager-showUsers">
+    </div>
+
 </div>

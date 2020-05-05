@@ -4,8 +4,7 @@
   "description": "A Mozilla IoT Gateway extension to manage door locks, users, and pin codes.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "rsync -avzhe ssh ~/git/doorlock-manager pi@gateway.local:~/.mozilla-iot/addons/"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
