@@ -8,27 +8,32 @@
         <label>Select Door Lock:</label><br>
         <select id="extension-doorlock-manager-select">
         </select>
+        <button id="extension-doorlock-manager-addUserButton">Add User</button>
     </div>
 
     <div id="extension-doorlock-manager-userList">
     </div>
 
-    <div id="extension-doorlock-manager-addUser" style="display: none">
+    <div id="extension-doorlock-manager-userForm" style="display: none">
         <form>
             <label for="name">Name</label><br>
-            <input name="name" id="extension-doorlock-manager-name"><br>
+            <input name="name" id="extension-doorlock-manager-name" required><br>
 
             <label for="id">Id</label><br>
             <input name="id" id="extension-doorlock-manager-id"><br>
 
             <label for="pin">Pin</label><br>
-            <input name="pin" id="extension-doorlock-manager-pin"><br>
+            <input name="pin" id="extension-doorlock-manager-pin" type="number" required><br>
 
-            <label for="startTime">Start</label><br>
-            <input name="startTime" id="extension-doorlock-manager-startTime"><br>
+            <label for="startTime">Start Date/Time</label><br>
+            <input name="startDate" id="extension-doorlock-manager-startDate" type="date">
+            <input name="startTime" id="extension-doorlock-manager-startTime" type="time">
+            <br>
 
-            <label for="endTime">End</label><br>
-            <input name="endTime" id="extension-doorlock-manager-endTime"><br>
+            <label for="endTime">End Date/Time</label><br>
+            <input name="endDate" id="extension-doorlock-manager-endDate" type="date">
+            <input name="endTime" id="extension-doorlock-manager-endTime" type="time">
+            <br>
 
             <button id="extension-doorlock-manager-submitUser">Add User</button>
         </form>
