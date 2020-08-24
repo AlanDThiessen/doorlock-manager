@@ -63,11 +63,11 @@
                 'addUser': {
                     'input': {
                         'userName': formData.userName,
-                        'userId': formData.userId,
-                        'status': 1,
+                        'userId': parseInt(formData.userId),
+                        'status': "Enabled",
                         'pin': formData.pin,
-                        'startDate': formData.startDate,
-                        'endDate': formData.endDate
+                        'startDate': formData.startDate.toString(),
+                        'endDate': formData.endDate.toString(),
                     }
                 }
             };
