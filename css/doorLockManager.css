@@ -45,7 +45,10 @@
     margin: 0 auto;
 }
 
-
 #extension-doorlock-manager-userList {
-    text-align: left;
+    border-collapse: collapse;
+}
+
+#extension-doorlock-manager-userList tr, th, td {
+    border: 1px solid white;
 }

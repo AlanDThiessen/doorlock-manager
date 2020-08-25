@@ -11,9 +11,6 @@
         <button id="extension-doorlock-manager-addUserButton">Add User</button>
     </div>
 
-    <div id="extension-doorlock-manager-userList">
-    </div>
-
     <div id="extension-doorlock-manager-userForm" style="display: none">
         <form>
             <label for="name">Name</label><br>
@@ -37,6 +34,19 @@
 
             <button id="extension-doorlock-manager-submitUser">Add User</button>
         </form>
+    </div>
+
+    <div>
+        <table id="extension-doorlock-manager-userList">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">End Time</th>
+            </tr>
+            </thead>
+        </table>
     </div>
 
     <div id="extension-doorlock-manager-showUsers">

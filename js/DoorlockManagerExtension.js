@@ -1,4 +1,9 @@
+'use strict';
+
 (function() {
+    /*************************************************************************
+     * Class DoorlockManagerExtension
+     *************************************************************************/
     class DoorlockManagerExtension extends window.Extension {
         constructor() {
             super('doorlock-manager');
@@ -29,6 +34,7 @@
             this.view.innerHTML = this.content;
 
             this.userForm = new UserForm();
+            this.userList = new UserList('userList');
             this.lockSelect = new DoorLockList('select', this.doorLocks, function() {
                 mgr.DoorLockSelected();
             });
@@ -39,6 +45,7 @@
 
         hide() {
             this.lockSelect.destroy();
+            this.userList.clear();
             this.addUserButton = undefined;
             this.lockSelect = undefined;
             this.userForm.clear();
@@ -53,12 +60,16 @@
             else {
                 this.selectedLock = undefined;
                 this.addUserButton.disable();
+                this.userList.hide();
+                this.userList.clear();
                 this.userForm.hide();
                 this.userForm.clear();
             }
         }
 
         AddNewUser(formData) {
+            console.log(formData);
+
             let addUser = {
                 'addUser': {
                     'input': {
@@ -88,35 +99,9 @@
 
 
         SelectDoorLock(doorLockId) {
-            const userList = GetId('userList');
-
             this.selectedLock = this.doorLocks.find((lock) => lock.id == doorLockId);
-
-            window.API.getJson(this.selectedLock.properties.users.links[0].href)
-                .then((resp) => {
-                    let htmlList = '<ul>';
-
-                    resp.users.forEach((user) => {
-                        let startDate = new Date();
-                        let endDate = new Date();
-
-                        startDate.setTime(user.startDate);
-                        endDate.setTime(user.endDate);
-
-                        htmlList += `<li>${user.userName}<ul>`;
-                        htmlList += `<li>Id: ${user.userId}</li>`;
-                        htmlList += `<li>Pin: ${user.pin}</li>`
-                        htmlList += `<li>Start: ${startDate.toLocaleString()}`
-                        htmlList += `<li>End: ${endDate.toLocaleString()}`
-                        htmlList += '</ul>';
-                    });
-
-                    htmlList += '</ul>';
-
-                    userList.innerHTML = htmlList;
-                }).catch((e) => {
-                console.log(e);
-            })
+            this.userList.clear();
+            this.userList.populate(this.selectedLock);
         }
 
 
@@ -159,6 +144,9 @@
     }
 
 
+    /*************************************************************************
+     * Class DoorLockList
+     *************************************************************************/
     class DoorLockList {
         constructor(id, lockList, changeHandler = null) {
             this.element = GetId(id);
@@ -199,6 +187,76 @@
     }
 
 
+    /*************************************************************************
+     * Class User List
+     *************************************************************************/
+    class UserList {
+        constructor(id) {
+            this.doorLock = undefined;
+            this.table = GetId(id);
+            this.clear();
+            this.hide();
+        }
+
+        populate(doorLock) {
+            let uList = this;
+
+            this.doorLock = doorLock;
+            this.getUsers().then((users) => {
+                uList.displayUsers(users);
+            });
+            this.show();
+        }
+
+        getUsers() {
+            return window.API.getJson(this.doorLock.properties.users.links[0].href)
+                .then((resp) => {
+                    return resp.users;
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
+        }
+
+
+        displayUsers(users) {
+            if(Array.isArray(users)) {
+                users.sort((uA, uB) => (uA.userId - uB.userId));
+                users.forEach((user) => {
+                    let startDate = new Date();
+                    let endDate = new Date();
+                    let row = this.table.insertRow(-1);
+
+                    startDate.setTime(user.startDate);
+                    endDate.setTime(user.endDate);
+
+                    row.insertCell(0).appendChild(document.createTextNode(user.userId));
+                    row.insertCell(1).appendChild(document.createTextNode(user.userName));
+                    row.insertCell(2).appendChild(document.createTextNode(startDate.toLocaleString()));
+                    row.insertCell(3).appendChild(document.createTextNode(endDate.toLocaleString()));
+                });
+            }
+        }
+
+        show() {
+            this.table.style.display = 'block';
+        }
+
+        hide() {
+            this.table.style.display = 'none';
+        }
+
+        clear() {
+            while(this.table.rows.length > 1) {
+                this.table.deleteRow(-1);
+            }
+        }
+    }
+
+
+    /*************************************************************************
+     * Class UserForm
+     *************************************************************************/
     class UserForm {
         constructor() {
             this.element = GetId('userForm');
@@ -344,6 +402,10 @@
         }
     }
 
+
+    /*************************************************************************
+     * Class WebButton
+     *************************************************************************/
     class WebButton {
         constructor(id, clickHandler = null) {
             this.element = GetId(id);
