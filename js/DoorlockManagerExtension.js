@@ -68,7 +68,7 @@
         }
 
         AddNewUser(formData) {
-            console.log(formData);
+            const mgr = this;
 
             let addUser = {
                 'addUser': {
@@ -88,11 +88,13 @@
                 let url = this.selectedLock.actions.addUser.links[0].href;
 
                 window.API.postJson(url, addUser)
-                    .then((resp) => {
-                        console.log(resp);
+                    .finally(() => {
+                        mgr.userForm.hide();
+                        mgr.userForm.clear();
+                        mgr.userList.populate();
                     })
                     .catch((e) => {
-                        console.log(e);
+                        console.log("Add user post failed: " + e);
                     });
             }
         }
@@ -198,13 +200,20 @@
             this.hide();
         }
 
-        populate(doorLock) {
-            let uList = this;
+        populate(doorLock = null) {
+            const uList = this;
 
-            this.doorLock = doorLock;
-            this.getUsers().then((users) => {
-                uList.displayUsers(users);
-            });
+            if(doorLock !== null) {
+                this.doorLock = doorLock;
+            }
+
+            if(this.doorLock) {
+                this.getUsers().then((users) => {
+                    uList.clear();
+                    uList.displayUsers(users);
+                });
+            }
+
             this.show();
         }
 
@@ -276,7 +285,7 @@
 
             let userForm = this;
 
-            this.submit = new WebButton('submitUser', function() {
+            this.submit = new WebButton('submitUser', function(event) {
                 let form = {
                     'userName': userForm.formFields.userName.value,
                     'userId': userForm.formFields.userId.value,
@@ -284,6 +293,8 @@
                     'startDate': Date.parse(userForm.formFields.startDate.value + ' ' + userForm.formFields.startTime.value),
                     'endDate': Date.parse(userForm.formFields.endDate.value + ' ' + userForm.formFields.endTime.value)
                 }
+
+                event.preventDefault();
 
                 if(isNaN(form.startDate)) {
                     form.startDate = "";
